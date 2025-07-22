@@ -1,0 +1,17 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    //create path alias
+    "baseUrl": ".",
+    "paths": {
+      "rle.ts": ["src/rle.ts"],
+      "components/rle/*": ["src/components/rle/*"],
+      "lib/rle-steps": ["src/lib/rle-steps.ts"],
+      "pages/rle-page": ["src/pages/rle-page.tsx"]
+    }
+  }
+}
