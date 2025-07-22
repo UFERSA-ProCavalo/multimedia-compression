@@ -102,7 +102,7 @@ export default function RLEPage() {
   };
 
    return (
-     <main className="w-full min-h-screen max-h-screen overflow-hidden flex flex-col bg-background">
+     <main className="w-full min-h-screen max-h-screen flex flex-col bg-background">
        <InfoModal open={infoOpen} onOpenChange={setInfoOpen} />
        <div className="absolute top-4 right-4 z-50">
          <button
@@ -127,10 +127,41 @@ export default function RLEPage() {
              Ativar passo a passo (visualização do algoritmo)
            </label>
          </div>
-         {/* File upload and stats */}       
-         <div className="flex flex-col md:flex-row gap-4 flex-1 min-h-0">
-          <div className="flex-1 min-h-0 flex flex-col gap-4">
-             <FileUploadCard
+          {/* Example file buttons */}
+          <div className="flex gap-2 mb-4">
+            <button
+              className="px-4 py-2 rounded bg-blue-500 text-white font-semibold shadow hover:bg-blue-600 transition-colors"
+              onClick={async () => {
+                const response = await fetch('/all_gray.bmp');
+                const blob = await response.blob();
+                const file = new File([blob], 'all_gray.bmp', { type: blob.type });
+                // Create a synthetic event to reuse handleFileChange
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                if (fileInputRef.current) fileInputRef.current.files = dt.files;
+                handleFileChange({ target: { files: dt.files } } as any);
+              }}
+            >
+              Carregar all_gray.bmp
+            </button>
+            <button
+              className="px-4 py-2 rounded bg-blue-500 text-white font-semibold shadow hover:bg-blue-600 transition-colors"
+              onClick={async () => {
+                const response = await fetch('/teste.txt');
+                const blob = await response.blob();
+                const file = new File([blob], 'teste.txt', { type: blob.type });
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                if (fileInputRef.current) fileInputRef.current.files = dt.files;
+                handleFileChange({ target: { files: dt.files } } as any);
+              }}
+            >
+              Carregar teste.txt
+            </button>
+          </div>
+          {/* File upload and stats */}       
+          <div className="flex flex-col md:flex-row gap-4 flex-1 min-h-0">
+           <div className="flex-1 min-h-0 flex flex-col gap-4">             <FileUploadCard
               file={file}
               mode={mode}
               fileInputRef={fileInputRef}
@@ -187,17 +218,6 @@ export default function RLEPage() {
                 </div>
               </div>
             )}
-           {stepModalEnabled && (
-             <div className="flex justify-center mt-4">
-               <button
-                 className="px-6 py-2 rounded bg-primary text-primary-foreground font-semibold shadow hover:bg-primary/90 transition-colors"
-                 onClick={() => setShowStepsModal(true)}
-                 disabled={!fileData}
-               >
-                 Mostrar Passos
-               </button>
-             </div>
-           )}
          </div>
          {stepModalEnabled && (
            <RLEStepModal
