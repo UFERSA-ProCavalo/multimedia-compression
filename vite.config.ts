@@ -12,5 +12,5 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
     assetsInlineLimit: 100000000,
-  },
+  }
 })
