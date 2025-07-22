@@ -132,10 +132,10 @@ export default function RLEPage() {
             <button
               className="px-4 py-2 rounded bg-blue-500 text-white font-semibold shadow hover:bg-blue-600 transition-colors"
               onClick={async () => {
-                const response = await fetch('/all_gray.bmp');
-                const blob = await response.blob();
-                const file = new File([blob], 'all_gray.bmp', { type: blob.type });
-                // Create a synthetic event to reuse handleFileChange
+                 const base = import.meta.env.BASE_URL || '/';
+                 const response = await fetch(`${base}all_gray.bmp`);
+                 const blob = await response.blob();
+                 const file = new File([blob], 'all_gray.bmp', { type: blob.type });                // Create a synthetic event to reuse handleFileChange
                 const dt = new DataTransfer();
                 dt.items.add(file);
                 if (fileInputRef.current) fileInputRef.current.files = dt.files;
@@ -147,10 +147,10 @@ export default function RLEPage() {
             <button
               className="px-4 py-2 rounded bg-blue-500 text-white font-semibold shadow hover:bg-blue-600 transition-colors"
               onClick={async () => {
-                const response = await fetch('/teste.txt');
-                const blob = await response.blob();
-                const file = new File([blob], 'teste.txt', { type: blob.type });
-                const dt = new DataTransfer();
+                 const base = import.meta.env.BASE_URL || '/';
+                 const response = await fetch(`${base}teste.txt`);
+                 const blob = await response.blob();
+                 const file = new File([blob], 'teste.txt', { type: blob.type });                const dt = new DataTransfer();
                 dt.items.add(file);
                 if (fileInputRef.current) fileInputRef.current.files = dt.files;
                 handleFileChange({ target: { files: dt.files } } as any);
